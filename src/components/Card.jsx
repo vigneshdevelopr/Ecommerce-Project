@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardActions,
@@ -8,22 +8,17 @@ import {
   Skeleton,
   Typography,
   Button,
-
 } from "@mui/material";
 import { styled } from "styled-components";
 import axios from "axios";
 import { getuserId } from "./Who's_the_User";
 
-const userId = getuserId()
-
-
+const userId = getuserId();
 
 function Media() {
-
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   // const[cart,setCart]=useState([])
-
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,21 +41,20 @@ function Media() {
     fetchProducts();
   }, []);
 
-
   //add to cart:
 
-  const addtoCart = async(prodId) =>{
+  const addtoCart = async (prodId) => {
     try {
-      const response = await axios.put("http://localhost:4000/products/cart",{
+      const response = await axios.put("http://localhost:4000/products/cart", {
         prodId,
-        userId
-      }) 
-      alert('Product added to cart')
+        userId,
+      });
+      alert("Product added to cart");
       console.log(response);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <Grid container spacing={3}>
@@ -77,25 +71,40 @@ function Media() {
                   component="img"
                   alt="product"
                   height="230"
-                  style={{width:'200px',margin:'0 auto'}}
+                  style={{ width: "200px", margin: "0 auto" }}
                   image={item.image}
-                  
                 />
                 <CardContent>
-                  <Typography style={{fontSize:'1.5ch',fontWeight:'bold'}} variant="h6" component="div">
+                  <Typography
+                    style={{ fontSize: "1.5ch", fontWeight: "bold" }}
+                    variant="h6"
+                    component="div"
+                  >
                     {item.title}
                   </Typography>
-                  <Typography variant="body2" style={{color:'yellow',backgroundColor:'#252525',fontWeight:'bold',fontSize:'large',borderRadius:'10px',margin:'5px'}}>
-                  Rs: {item.price}/-
+                  <Typography
+                    variant="body2"
+                    style={{
+                      color: "yellow",
+                      backgroundColor: "#252525",
+                      fontWeight: "bold",
+                      fontSize: "large",
+                      borderRadius: "10px",
+                      margin: "5px",
+                    }}
+                  >
+                    Rs: {item.price}/-
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                   Rating: {item.rating}/5
+                    Rating: {item.rating}/5
                   </Typography>
                 </CardContent>
                 <CardActions>
-                                <StyledButton 
-                  onClick={()=>addtoCart(item._id)}
-                  className="cartbtn" size="small">
+                  <StyledButton
+                    onClick={() => addtoCart(item._id)}
+                    className="cartbtn"
+                    size="small"
+                  >
                     Add to Cart
                   </StyledButton>
                 </CardActions>
@@ -109,7 +118,7 @@ function Media() {
 function Cards() {
   return (
     <Container>
-        <Media />
+      <Media />
     </Container>
   );
 }
@@ -119,26 +128,25 @@ export default Cards;
 const Container = styled.div`
   display: flex;
   justify-content: center;
-width: 100% !important;
+  width: 100% !important;
 `;
 
 const StyledCard = styled(Card)`
-background-color: whitesmoke !important;
+  background-color: whitesmoke !important;
   height: 100%;
   max-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
-  -webkit-box-shadow: 4px 17px 18px -2px rgba(0,0,0,0.68) !important;
--moz-box-shadow: 4px 17px 18px -2px rgba(0,0,0,0.68) !important;
-box-shadow: 4px 17px 18px -2px rgba(0,0,0,0.68) !important;
-
+  -webkit-box-shadow: 4px 17px 18px -2px rgba(0, 0, 0, 0.68) !important;
+  -moz-box-shadow: 4px 17px 18px -2px rgba(0, 0, 0, 0.68) !important;
+  box-shadow: 4px 17px 18px -2px rgba(0, 0, 0, 0.68) !important;
 `;
 
 const StyledButton = styled(Button)`
-display: flex !important;
-margin: 0 auto !important;
+  display: flex !important;
+  margin: 0 auto !important;
   background-color: #252525 !important;
   color: #ffffff !important;
   font-weight: bold;
