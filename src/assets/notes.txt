@@ -1,0 +1,2 @@
+default amazon logo size:
+height: 90px;
