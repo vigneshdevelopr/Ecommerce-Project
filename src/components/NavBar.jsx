@@ -15,7 +15,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { ShoppingCart } from "@mui/icons-material";
+import { LogoutOutlined, LogoutTwoTone, ShoppingCart } from "@mui/icons-material";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,6 +58,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+  
+  
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -82,28 +84,13 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const logOut =async()=>{
+
+await navigate('/')
+  }
+
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My Cart</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
+  
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -122,7 +109,7 @@ export default function NavBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={()=>navigate('/cart')}>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={0} color="error">
             <ShoppingCart />
@@ -130,20 +117,20 @@ export default function NavBar() {
         </IconButton>
         <p>Cart</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem           onClick={() => navigate("/home")}
+>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
           color="inherit"
-          onClick={() => navigate("/cart")}
         >
           <Badge badgeContent={0} color="error">
             <LocalMallIcon />
           </Badge>
         </IconButton>
-        <p>Orders</p>
+        <p>Shop</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={logOut}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -151,9 +138,9 @@ export default function NavBar() {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <LogoutOutlined />
         </IconButton>
-        <p>Profile</p>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );
@@ -169,17 +156,9 @@ export default function NavBar() {
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              Milky Man{" "}
+              Milky Man
             </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search Here…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
+           
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton
@@ -209,10 +188,10 @@ export default function NavBar() {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={logOut}
                 color="inherit"
               >
-                <AccountCircle />
+                <LogoutOutlined />
               </IconButton>
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -230,7 +209,6 @@ export default function NavBar() {
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
-        {renderMenu}
       </Box>
     </div>
   );

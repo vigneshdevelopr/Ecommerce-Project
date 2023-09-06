@@ -9,7 +9,7 @@ function Home() {
   return (
     <Base>
       <MainHome>
-        <Division>Welcome to Milky Man's Paal Pannai  </Division>
+        <Division>Welcome to Milky Man's Dairy Areana  </Division>
 
         <Cards>
           <Card />
@@ -31,7 +31,9 @@ const Division = styled.div`
   font-size: x-large;
   font-weight: bold;
   margin-bottom: 1cm;
-  padding-top: 2cm;
+  padding-top: 1cm;
+  width: 100%;
+  height: 100%;
 
   @media only screen and (max-width: 768px) {
     position: relative;

@@ -41,7 +41,7 @@ function Login() {
     };
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:4000/signin", {
+      const response = await fetch("https://townbazzar-backend.onrender.com/signin", {
         method: "POST",
         body: JSON.stringify(newData),
         headers: {

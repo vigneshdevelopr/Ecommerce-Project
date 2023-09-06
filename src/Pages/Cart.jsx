@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -8,14 +8,17 @@ import axios from "axios";
 import { getuserId } from "../components/Who's_the_User";
 
 function Cart() {
-  const [cart, setCart] = useState([]);
   const userId = getuserId();
+
+  const [cart, setCart] = useState([]);
 
   // Initialize the quantity for each item to 1
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/products/cart/${userId}`);
+        const response = await axios.get(
+          `https://townbazzar-backend.onrender.com/products/cart/${userId}`
+        );
         const cartWithDefaultQuantity = response.data.map((item) => ({
           ...item,
           quantity: 1,
@@ -39,19 +42,55 @@ function Cart() {
       setCart(updatedCart);
     }
   };
-const handleRemove = async (productId) => {
+
+  const handleRemove = async (productId) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/products/cart/${userId}/${productId}`);
+      const response = await axios.delete(
+        `https://townbazzar-backend.onrender.com/products/cart/${userId}/${productId}`
+      );
       setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
       console.log(response);
-      alert('Your selected product has been removed from Cart');
+      alert("Your selected product has been removed from Cart");
     } catch (error) {
       console.log(error);
     }
   };
 
   // Calculate total amount based on updated quantities
-  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalAmount = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+
+  const handlePay = ()=>{
+    var options={
+      key: "rzp_test_QCD690k2QQNE4x",
+      key_Secret: "FPtHdE56AYKFWYhS3YqmoZs6",
+      amount: totalAmount * 100,
+      currency: "INR",
+      name: "Milky_Man",
+      description: "Ecom_Project",
+      handler: function(response){
+        alert("Payment Successfull 🍾");
+      },
+      prefill:{
+        name: "",
+        email:"vigneshwebdevelopr@gmail.com",
+        contact: "8323452245",
+
+      },
+      notes:{
+        address: "gandhi street, chennai"
+      },
+      theme:{
+        color:'whitesmoke'
+      }
+
+    }
+    var pay = new window.Razorpay(options)
+    pay.open();
+  }
 
   return (
     <Base>
@@ -66,14 +105,24 @@ const handleRemove = async (productId) => {
                   <About>
                     <h1 className="title">{item.title}</h1>
                     <div className="price">
-                      <span style={{ fontSize: 'large', fontWeight: 'bold' }}>Rs: {item.price}/-</span>
+                      <span style={{ fontSize: "large", fontWeight: "bold" }}>
+                        Rs: {item.price}/-
+                      </span>
                     </div>
                     <div className="quantity">
-                      <IconButton onClick={() => handleQuantityChange(item._id, item.quantity - 1)}>
+                      <IconButton
+                        onClick={() =>
+                          handleQuantityChange(item._id, item.quantity - 1)
+                        }
+                      >
                         <RemoveIcon />
                       </IconButton>
                       {item.quantity}
-                      <IconButton onClick={() => handleQuantityChange(item._id, item.quantity + 1)}>
+                      <IconButton
+                        onClick={() =>
+                          handleQuantityChange(item._id, item.quantity + 1)
+                        }
+                      >
                         <AddIcon />
                       </IconButton>
                     </div>
@@ -82,7 +131,13 @@ const handleRemove = async (productId) => {
                     <Button
                       onClick={() => handleRemove(item._id)}
                       variant="contained"
-                      style={{ display: 'flex', margin: '0 auto', marginTop: '5px', color: 'whitesmoke', backgroundColor: 'red' }}
+                      style={{
+                        display: "flex",
+                        margin: "0 auto",
+                        marginTop: "5px",
+                        color: "whitesmoke",
+                        backgroundColor: "red",
+                      }}
                     >
                       Remove from Cart
                     </Button>
@@ -97,36 +152,36 @@ const handleRemove = async (productId) => {
               marginTop: "1rem",
               borderRadius: "10px",
             }}
-            xs={6}
+            xs={9}
             md={4}
-            
           >
             <Grid2 className="Grid2">
-            <HeaderTitle className="title" style={{ textAlign: "center" }}>
-              CHECKOUT
-            </HeaderTitle>
-            <div className="proceed">
-              <div className="head1">Total Amount to Checkout</div>
-              {cart.map((item, idx) => (
-                <div key={idx} className="description">
-                  {item.quantity}x {item.title} : Rs {item.price * item.quantity}/-
-                </div>
-              ))}
-              <hr />
-            </div>
-            <div className="pre-payment">
-              <div className="subtotal">SubTotal: {totalAmount}/-</div>
-              <div className="button">
-                <Button
-                  style={{ color: "whitesmoke", backgroundColor: "#252525" }}
-                  variant="contained"
-                >
-                  Proceed to Pay
-                </Button>
+              <HeaderTitle className="title" style={{ textAlign: "center" }}>
+                CHECKOUT
+              </HeaderTitle>
+              <div className="proceed">
+                <div className="head1">Total Amount to Checkout</div>
+                {cart.map((item, idx) => (
+                  <div key={idx} className="description">
+                    {item.quantity}x {item.title} : Rs{" "}
+                    {item.price * item.quantity}/-
+                  </div>
+                ))}
+                <hr />
               </div>
-            </div>
+              <div className="pre-payment">
+                <div className="subtotal">SubTotal: {totalAmount}/-</div>
+                <div className="button">
+                  <Button
+                  onClick={()=>handlePay()}
+                    style={{ color: "whitesmoke", backgroundColor: "#252525" }}
+                    variant="contained"
+                  >
+                    Proceed to Pay
+                  </Button>
+                </div>
+              </div>
             </Grid2>
-            
           </Grid>
         </Grid>
       </Division>
@@ -135,9 +190,6 @@ const handleRemove = async (productId) => {
 }
 
 export default Cart;
-
-
-
 
 const Division = styled.div`
   height: 100%;
@@ -182,7 +234,6 @@ const Division = styled.div`
 `;
 
 const Card = styled.div`
-
   width: 300px;
   /* border: 2px solid #252525; */
   margin: 2rem;
@@ -193,7 +244,7 @@ const Card = styled.div`
 
   .image {
     /* border: 1px solid yellow; */
-    
+
     padding: 1rem;
   }
 
@@ -229,14 +280,13 @@ const HeaderTitle = styled.h2`
   font-family: "Prompt", sans-serif;
 `;
 
-
 const Grid2 = styled.div`
-height: 40%;
-display: flex;
-padding: 10px;
-text-align: center;
-flex-direction: column;
--webkit-box-shadow: 7px 4px 39px 5px rgba(0, 0, 0, 0.75);
+  height: 40%;
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  flex-direction: column;
+  -webkit-box-shadow: 7px 4px 39px 5px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 7px 4px 39px 5px rgba(0, 0, 0, 0.75);
   box-shadow: 7px 4px 39px 5px rgba(0, 0, 0, 0.75);
-`
+`;
