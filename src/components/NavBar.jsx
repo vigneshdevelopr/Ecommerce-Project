@@ -156,7 +156,7 @@ await navigate('/')
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              Milky Man
+              Town Bazzar
             </Typography>
            
             <Box sx={{ flexGrow: 1 }} />

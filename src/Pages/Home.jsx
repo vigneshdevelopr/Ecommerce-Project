@@ -9,7 +9,7 @@ function Home() {
   return (
     <Base>
       <MainHome>
-        <Division>Welcome to Milky Man's Dairy Areana  </Division>
+        <Division>Welcome to Town Bazzar's Shopping Areana  </Division>
 
         <Cards>
           <Card />
