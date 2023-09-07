@@ -6,8 +6,11 @@ import { Button, Grid, IconButton } from "@mui/material";
 import Base from "../components/Base";
 import axios from "axios";
 import { getuserId } from "../components/Who's_the_User";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
+
+  const navigate = useNavigate()
   const userId = getuserId();
 
   const [cart, setCart] = useState([]);
@@ -73,6 +76,7 @@ function Cart() {
       description: "Ecom_Project",
       handler: function(response){
         alert("Payment Successfull 🍾");
+         navigate('/end')
       },
       prefill:{
         name: "",
