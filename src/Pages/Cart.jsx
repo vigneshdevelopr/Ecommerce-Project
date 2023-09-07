@@ -69,7 +69,7 @@ function Cart() {
       key_Secret: "FPtHdE56AYKFWYhS3YqmoZs6",
       amount: totalAmount * 100,
       currency: "INR",
-      name: "Milky_Man",
+      name: "Town_Bazzar",
       description: "Ecom_Project",
       handler: function(response){
         alert("Payment Successfull 🍾");
