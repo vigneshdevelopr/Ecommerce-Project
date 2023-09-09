@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {alpha } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
@@ -62,6 +62,8 @@ export default function NavBar() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [inactivityTimer, setInactivityTimer] = useState(null);
+
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -84,8 +86,42 @@ export default function NavBar() {
   };
 
   const logOut = async () => {
+    window.localStorage.clear()
     await navigate('/');
+    await window.location.reload();
+
   };
+
+
+   // Function to reset the inactivity timer
+   const resetInactivityTimer = () => {
+    clearTimeout(inactivityTimer);
+
+    // Set a new timer to log out after 30 minutes of inactivity
+    const newInactivityTimer = setTimeout(logOut, 120 * 60 * 1000); // 30 minutes in milliseconds
+    setInactivityTimer(newInactivityTimer);
+  };
+
+  // Attach event listeners to reset the timer on user activity
+  useEffect(() => {
+    const activityEvents = ['mousemove', 'keydown', 'mousedown', 'touchstart'];
+    
+    const resetTimerOnActivity = () => {
+      resetInactivityTimer();
+    };
+
+    activityEvents.forEach((event) => {
+      document.addEventListener(event, resetTimerOnActivity);
+    });
+
+    // Clear the timer and remove event listeners when the component unmounts
+    return () => {
+      clearTimeout(inactivityTimer);
+      activityEvents.forEach((event) => {
+        document.removeEventListener(event, resetTimerOnActivity);
+      });
+    };
+  }, [inactivityTimer]);
 
   const menuId = 'primary-search-account-menu';
 
@@ -180,6 +216,18 @@ export default function NavBar() {
               >
                 <Badge badgeContent={0} color="error">
                   <ShoppingCart />
+                </Badge>
+              </IconButton>
+              <IconButton
+                onClick={()=>{
+                  navigate('/admin'),
+                  window.location.reload();
+                }}
+                size="larger"
+                color="inherit"
+              >
+                <Badge badgeContent={0} color="error">
+                  <AccountCircle />
                 </Badge>
               </IconButton>
               <IconButton

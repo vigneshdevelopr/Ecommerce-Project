@@ -58,9 +58,8 @@ function Login() {
       if (response.status === 200) {
         toast.success("Login Successful", toastify);
         await history("/home");
-        window.localStorage.setItem("access-token", data.token);
         window.localStorage.setItem("userId", data.userID);
-        window.localStorage.setItem("user", data.username);
+     
       }
       setValues({
         email: "",
@@ -76,7 +75,7 @@ function Login() {
   return (
     <div>
       <Container>
-        <ArcArea>
+  <ArcArea>
           {loading ? (
             <LoadingSpinner />
           ) : (
