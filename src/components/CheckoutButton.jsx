@@ -7,7 +7,7 @@
 //     setPaymentLoading(true);
 
 //     try {
-//       const response = await fetch("https://townbazzar-backend.onrender.com/order", {
+//       const response = await fetch("https://townbazzarserver.up.railway.app/order", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",

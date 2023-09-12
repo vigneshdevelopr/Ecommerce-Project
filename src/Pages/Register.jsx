@@ -54,7 +54,7 @@ const addUser = async() =>{
       username,
       password
     }
-    const response = await fetch('https://townbazzar-backend.onrender.com/users/add',{
+    const response = await fetch('https://townbazzarserver.up.railway.app/users/add',{
       method:'POST',
       body:JSON.stringify(newData),
       headers:{

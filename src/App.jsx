@@ -18,7 +18,7 @@ function App() {
 const [loginUser,setLoginUser]=useState([])
     useEffect(()=>{
 const loginUsers = async() =>{
-    const response = await axios.get(`https://townbazzar-backend.onrender.com/products/loginUser/${userId}`)
+    const response = await axios.get(`https://townbazzarserver.up.railway.app/products/loginUser/${userId}`)
     setLoginUser(response.data)
    console.log(response.data);
 

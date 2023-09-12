@@ -20,7 +20,7 @@ function Your_Orders() {
     const fetchCart = async () => {
       try {
         const response = await axios.get(
-          `https://townbazzar-backend.onrender.com/products/cart/${userId}`
+          `https://townbazzarserver.up.railway.app/products/cart/${userId}`
         );
         const cartWithDefaultQuantity = response.data.map((item) => ({
           ...item,
@@ -49,7 +49,7 @@ function Your_Orders() {
   const handleRemove = async (productId) => {
     try {
       const response = await axios.delete(
-        `https://townbazzar-backend.onrender.com/products/cart/${userId}/${productId}`
+        `https://townbazzarserver.up.railway.app/products/cart/${userId}/${productId}`
       );
       setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
       console.log(response);
