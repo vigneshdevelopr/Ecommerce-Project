@@ -58,6 +58,7 @@ function Login() {
       if (response.status === 200) {
         toast.success("Login Successful", toastify);
         await history("/home");
+        window.location.reload()
         window.localStorage.setItem("userId", data.userID);
      
       }
