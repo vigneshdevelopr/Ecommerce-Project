@@ -23,7 +23,7 @@ function Media() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://townbazzarserver.up.railway.app/products", {
+        const response = await fetch("https://townbazzar-backend.onrender.com/products", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -45,7 +45,7 @@ function Media() {
 
   const addtoCart = async (prodId) => {
     try {
-      const response = await axios.put("https://townbazzarserver.up.railway.app/products/cart", {
+      const response = await axios.put("https://townbazzar-backend.onrender.com/products/cart", {
         prodId,
         userId,
       });
